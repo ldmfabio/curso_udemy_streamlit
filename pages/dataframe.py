@@ -18,8 +18,6 @@ with st.sidebar.expander("Preço do Produto"):
         df["Preço"].min(),
         df["Preço"].max(),
         (df["Preço"].min(), df["Preço"].max())
-        # 0, 5000,
-        # (0, 5000)
     )
 
 with st.sidebar.expander("Data da Compra"):
@@ -27,4 +25,16 @@ with st.sidebar.expander("Data da Compra"):
         "Selecione a data",
         (df["Data da Compra"].min(), df["Data da Compra"].max()),
     )
-st.dataframe(df)
+
+query = '''
+    `Categoria do Produto` in @categorias \
+    and `Preço` >= @preco[0] \
+    and `Preço` <= @preco[1] \
+    and `Data da Compra` >= @data_compra[0] \
+    and `Data da Compra` <= @data_compra[1]
+'''
+
+filtro_dados = df.query(query)
+filtro_dados = filtro_dados[colunas]
+
+st.dataframe(filtro_dados)
