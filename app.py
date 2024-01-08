@@ -1,7 +1,7 @@
 import streamlit as st
 import plotly.express as px
 from dataset import df
-from utils import format_number, df_vendedores
+from utils import format_number
 from graficos import (
     grafico_map_estado,
     grafico_rec_mensal,
@@ -14,6 +14,16 @@ from graficos import (
 
 st.set_page_config(layout="wide")
 st.title("Dashboard de Vendas :shopping_trolley:")
+
+st.sidebar.title("Filtro de Vendedores")
+
+filtro_vendedor = st.sidebar.multiselect(
+    'Vendedores',
+    df['Vendedor'].unique(),
+)
+
+if filtro_vendedor:
+    df = df[df['Vendedor'].isin(filtro_vendedor)]
 
 aba1, aba2, aba3 = st.tabs(["Dataset", "Receita", "Vendedores"])
 
