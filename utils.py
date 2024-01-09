@@ -41,7 +41,7 @@ df_rec_categoria = (
 
 # 4- Dataframe - Vendedores
 df_vendedores = pd.DataFrame(df.groupby("Vendedor")["Preço"].agg(["sum", "count"]))
-print(df_vendedores)
+# print(df_vendedores)
 
 
 # Função para converter arquivo csv
